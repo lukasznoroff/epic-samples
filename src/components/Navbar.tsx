@@ -54,7 +54,7 @@ export default function Navbar() {
               navbar ? 'block' : 'hidden'
             }`}
           >
-            <ul className='items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 text-black'>
+            <ul className='items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 text-black font-medium'>
               <li className=' hover:text-gray-600'>
                 <a href='/'>Home</a>
               </li>
