@@ -39,7 +39,7 @@ export const useFetch = (url: string): FetchResult => {
         setData(responseData.records);
         setLoading(false);
       } catch (error) {
-        // setError(error);
+        setError(error as Error);
         setLoading(false);
       }
     };

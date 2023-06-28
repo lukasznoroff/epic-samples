@@ -1,17 +1,19 @@
 import './App.css';
 import Navbar from './components/Navbar';
-import SampleList from './components/SampleList';
 import ProductOptions from './components/ProductOptions';
 import Home from './pages/Home';
 
+import { DataContextProvider } from './hooks/useDataContext';
+
 function App() {
   return (
-    <div className='App'>
-      <Navbar/>
-      <Home/>
-      <ProductOptions/>
-      <SampleList />
-    </div>
+    <DataContextProvider>
+      <div className='App'>
+        <Navbar />
+        <Home />
+        <ProductOptions />
+      </div>
+    </DataContextProvider>
   );
 }
 

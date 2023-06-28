@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
 
 interface Option {
@@ -5,12 +6,12 @@ interface Option {
   label: string;
 }
 
-function SelectPrice() {
-  const options: Option[] = [
-    { value: 'price-low', label: 'Price Low' },
-    { value: 'price-high', label: 'Price High' },
-  ];
+interface SelectComponentProps {
+  options: Option[];
+  placeholder: string;
+}
 
+const SelectComponent: React.FC<SelectComponentProps> = ({ options, placeholder }) => {
   const selectStyles: StylesConfig<Option, false> = {
     option: (provided, state) => ({
       ...provided,
@@ -24,6 +25,7 @@ function SelectPrice() {
         color: '#000000',
       },
     }),
+
     control: (provided, state) => ({
       ...provided,
       backgroundColor: 'transparent',
@@ -39,14 +41,23 @@ function SelectPrice() {
     }),
   };
 
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+
+  const handleSelectChange = (option: Option | null) => {
+    setSelectedOption(option);
+  };
+
   return (
     <Select
       options={options}
-      placeholder='Price'
+      placeholder={placeholder}
       className='min-w-[10vw]'
+      // className='min-w-[10vw] basis-2	grow-0 px-[4px]'
       styles={selectStyles}
+      value={selectedOption}
+      onChange={handleSelectChange}
     />
   );
-}
+};
 
-export default SelectPrice;
+export default SelectComponent;
