@@ -1,15 +1,15 @@
 interface RangeInputProps {
-  value: string;
+  readonly value: string;
 }
 
-const Slider: React.FC<RangeInputProps> = ({ value }) => {
+const Slider = ({ value }: RangeInputProps) => {
   return (
-    <div className='w-[20%]'>
+    <div className="w-[20%]">
       <input
-        id='default-range'
-        type='range'
+        id="default-range"
+        type="range"
         value={value}
-        className='w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
+        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
       />
     </div>
   );

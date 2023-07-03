@@ -1,31 +1,39 @@
+import React, { useState } from 'react';
 import AudioPlayer from './AudioPlayer';
 import GridItems from './GridItems';
-
+import SelectComponent from '../components/select-inputs/SelectComponent';
 import {
   formatOptions,
   genreOptions,
   priceOptions,
   releaseDateOptions,
 } from '../components/select-inputs/optionsData';
-
-import SelectComponent from '../components/select-inputs/SelectComponent';
+import Heading from '../components/ui/typography/Heading';
+import Container from './ui/container/Container';
 
 function ProductOptions() {
+  const [selectedImageName, setSelectedImageName] = React.useState('');
+  const [isStop, setIsStop] = useState<boolean>(false);
+
   return (
-    <div className='w-[95vw] mx-auto  px-4 md:flex md:px-8 h-auto flex-col'>
-      <h2 className='text-2xl font-medium py-20'>BROWSE ALL SOUNDS</h2>
-      <div className='flex  justify-between my-20'>
-        <SelectComponent options={formatOptions} placeholder='Select Formats' />
-        <SelectComponent options={genreOptions} placeholder='Select Genres' />
-        <SelectComponent options={priceOptions} placeholder='Price' />
+    <Container variant="wide">
+      <Heading variant="h2">BROWSE ALL SOUNDS</Heading>
+      <Container variant="flex">
+        <SelectComponent options={formatOptions} placeholder="Select Formats" />
+        <SelectComponent options={genreOptions} placeholder="Select Genres" />
+        <SelectComponent options={priceOptions} placeholder="Price" />
         <SelectComponent
           options={releaseDateOptions}
-          placeholder='Release Date'
+          placeholder="Release Date"
         />
-        <AudioPlayer />
-      </div>
-      <GridItems />
-    </div>
+        <AudioPlayer item={selectedImageName} setIsStop={setIsStop} />
+      </Container>
+      <GridItems
+        setSelectedImageName={setSelectedImageName}
+        setIsStop={setIsStop}
+        isStop={isStop}
+      />
+    </Container>
   );
 }
 

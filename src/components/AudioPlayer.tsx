@@ -1,31 +1,41 @@
 import { useDataContext } from '../hooks/useDataContext';
-import { ReactComponent as StopButton } from '../images/stop-button.svg';
-import { ReactComponent as PlayButton } from '../images/play-button.svg';
 import Slider from './Slider';
+import { useState } from 'react';
+import StopButton from './ui/buttons/StopButton';
+import PlayButton from './ui/buttons/PlayButton';
 
+interface AudioPlayerProps {
+  readonly item: string | undefined;
+  readonly setIsStop: any;
+}
 
-const AudioPlayer = () => {
+function AudioPlayer({ item, setIsStop }: AudioPlayerProps) {
   const { data } = useDataContext();
+  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(
+    null
+  );
+  console.log(currentAudio);
 
   const defaultValue = '50';
 
   return (
-    <div className='flex items-center space-x-5  p-4 border-[#ccc] border-[1px]'>
-      <div>Title</div>
+    <div className="flex items-center w-[350px] p-4 border-[#ccc] border-[1px] relative">
       {data.map((item) => (
-        <div key={item.id}>
-          {/* <p>{item.fields.name}</p>
-          {item.fields.audio[0].url} */}
-        </div>
+        <div key={item.id}></div>
       ))}
-      <div className='flex  w-[80px] 	justify-between'>
-        <StopButton className='cursor-pointer w-[30px] hover:text-neutral-500' />
-        <PlayButton className='cursor-pointer w-[30px] hover:text-neutral-500' />
+
+      <div className="flex  p-2 w-[30%]">
+        <StopButton onClick={() => setIsStop()} />
+        <PlayButton onClick={() => console.log()} />
       </div>
-      <p className='w-20'>{}</p>
       <Slider value={defaultValue} />
+      <div>
+        <p className=" text-[14px] absolute left-[8%] bottom-0 w-[100%] ">
+          <strong>Tilte:</strong> {item}
+        </p>
+      </div>
     </div>
   );
-};
+}
 
 export default AudioPlayer;

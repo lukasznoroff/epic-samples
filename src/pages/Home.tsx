@@ -1,21 +1,29 @@
 import HeroImage from '../images/bg-hero-image.jpg';
+import ProductOptions from '../components/ProductOptions';
+import Heading from '../components/ui/typography/Heading';
+import Container from '../components/ui/container/Container';
+import Paragraph from '../components/ui/typography/Paragraph';
 
 function Home() {
   return (
-    <section>
-      <div
-        className='ustify-center h-[80vh]  w-[100vw] bg-cover bg-center xs:px-8'
-        style={{ backgroundImage: `url(${HeroImage})` }}
-      >
-        <div className='h-[100%] content-center  md:px-32 justify-center	flex items-start flex-col'>
-          <h1 className='text-[40px] max-w-sm font-normal leading-[40px]'>
-            Your destination for unique music samples
-          </h1>
-          <p className='mt-4'>Uncover inspiring sounds</p>
-        </div>
-      </div>
-      
-    </section>
+    <>
+      <section>
+        <Container
+          variant="image"
+          style={{ backgroundImage: `url(${HeroImage})` }}
+        >
+          <Container variant="hero">
+            <Heading variant="h1" >
+              Your destination for unique music samples
+            </Heading>
+            <Paragraph variant='main'>
+              Uncover inspiring sounds
+            </Paragraph>
+          </Container>
+        </Container>
+        <ProductOptions />
+      </section>
+    </>
   );
 }
 

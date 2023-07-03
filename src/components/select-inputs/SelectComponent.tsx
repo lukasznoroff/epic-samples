@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
 
 interface Option {
-  value: string;
-  label: string;
+  readonly value: string;
+  readonly label: string;
 }
 
 interface SelectComponentProps {
-  options: Option[];
-  placeholder: string;
+  readonly options: Option[];
+  readonly placeholder: string;
 }
 
-const SelectComponent: React.FC<SelectComponentProps> = ({ options, placeholder }) => {
+const SelectComponent = ({ options, placeholder }: SelectComponentProps) => {
   const selectStyles: StylesConfig<Option, false> = {
     option: (provided, state) => ({
       ...provided,
@@ -51,7 +51,7 @@ const SelectComponent: React.FC<SelectComponentProps> = ({ options, placeholder 
     <Select
       options={options}
       placeholder={placeholder}
-      className='min-w-[10vw]'
+      className="min-w-[10vw]"
       // className='min-w-[10vw] basis-2	grow-0 px-[4px]'
       styles={selectStyles}
       value={selectedOption}
