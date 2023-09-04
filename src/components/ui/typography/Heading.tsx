@@ -9,7 +9,7 @@ interface HeadingProps {
 const Heading = ({ variant = 'body', className, children }: HeadingProps) => {
   const variantClasses = {
     h1: 'text-[40px] font-bold',
-    h2: 'text-2xl  py-20',
+    h2: 'text-3xl  py-20 font-semibold',
     h3: 'text-2xl font-bold',
     h4: 'text-xl font-bold',
     h5: 'text-lg font-bold',

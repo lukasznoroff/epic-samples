@@ -1,17 +1,21 @@
 export const formatOptions = [
+  { value: 'All', label: 'All Formats' },
   { value: 'wave', label: 'Wave' },
   { value: 'ableton', label: 'Ableton' },
 ];
 
 export const genreOptions = [
-  { value: 'hip-hop', label: 'Hip-Hop' },
-  { value: 'lo-fi', label: 'Lo-Fi' },
-  { value: 'ambient', label: 'Ambient' },
+  { value: 'All', label: 'All Genres' },
+  { value: 'Hip-Hop', label: 'Hip-Hop' },
+  { value: 'Lo-Fi', label: 'Lo-Fi' },
+  { value: 'Ambient', label: 'Ambient' },
 ];
 
 export const priceOptions = [
-  { value: 'price-low', label: 'Price Low' },
-  { value: 'price-high', label: 'Price High' },
+  { value: 'All', label: 'Price' },
+  { value: 'price-low', label: 'Low Price' },
+  { value: 'price-high', label: 'High Price' },
+  { value: 'reset', label: 'Reset Price' },
 ];
 
 export const releaseDateOptions = [

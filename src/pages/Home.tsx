@@ -7,7 +7,7 @@ import Paragraph from '../components/ui/typography/Paragraph';
 function Home() {
   return (
     <>
-      <section>
+      <section className='h-[100vh]'>
         <Container
           variant="image"
           style={{ backgroundImage: `url(${HeroImage})` }}

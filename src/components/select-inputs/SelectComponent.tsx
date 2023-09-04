@@ -1,19 +1,25 @@
-import { useState } from 'react';
-import Select, { StylesConfig } from 'react-select';
-
-interface Option {
-  readonly value: string;
-  readonly label: string;
-}
+import React from 'react';
+import Select from 'react-select';
 
 interface SelectComponentProps {
-  readonly options: Option[];
-  readonly placeholder: string;
+  options: { value: string; label: string }[];
+  value: { value: string; label: string } | null;
+  onChange: (selectedOption: any) => void;
+  placeholder?: string;
+  className?: string;
+  customStyles?: any;
 }
 
-const SelectComponent = ({ options, placeholder }: SelectComponentProps) => {
-  const selectStyles: StylesConfig<Option, false> = {
-    option: (provided, state) => ({
+const SelectComponent: React.FC<SelectComponentProps> = ({
+  options,
+  value,
+  onChange,
+  placeholder,
+  className,
+  customStyles,
+}) => {
+  const defaultStyles = {
+    option: (provided: any, state: any) => ({
       ...provided,
       backgroundColor: state.isSelected ? '#a3a3a3' : '#e0e0e0',
       color: state.isSelected ? '#030303' : '#000000',
@@ -26,36 +32,32 @@ const SelectComponent = ({ options, placeholder }: SelectComponentProps) => {
       },
     }),
 
-    control: (provided, state) => ({
+    control: (provided: any, state: any) => ({
       ...provided,
-      backgroundColor: 'transparent',
-      color: '#555',
-      borderColor: state.isFocused ? 'black' : provided.borderColor,
 
+      backgroundColor: state.isSelected ? '#a3a3a3' : '#e0e0e0',
+      color: state.isSelected ? '#030303' : '#000000',
+      borderColor: state.isSelected ? 'none' : 'none',
+      outline: state.isSelected ? '5px solid#a3a3a3' : '5px solid #a3a3a3',
+      marginRight: '20px',
+      width: '150px',
+      transition: 'background-color 0.3s',
       '&:hover': {
-        borderColor: 'black',
-      },
-      '&:focus': {
-        borderColor: 'black',
+        cursor: 'pointer',
       },
     }),
   };
 
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
-
-  const handleSelectChange = (option: Option | null) => {
-    setSelectedOption(option);
-  };
+  const mergedStyles = customStyles ? { ...defaultStyles, ...customStyles } : defaultStyles;
 
   return (
     <Select
       options={options}
+      value={value}
+      onChange={onChange}
       placeholder={placeholder}
-      className="min-w-[10vw]"
-      // className='min-w-[10vw] basis-2	grow-0 px-[4px]'
-      styles={selectStyles}
-      value={selectedOption}
-      onChange={handleSelectChange}
+      className={className}
+      styles={mergedStyles}
     />
   );
 };

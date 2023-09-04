@@ -1,13 +1,11 @@
 import './App.css';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { navLinks } from './components/ui/navbar/navLinks';
-
 import { DataContextProvider } from './hooks/useDataContext';
-
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import SharedLayout from './pages/SharedLayout';
+
 
 function App() {
   return (

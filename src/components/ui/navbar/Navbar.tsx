@@ -4,6 +4,7 @@ import NavLink from './NavLink';
 import { navLinks } from './navLinks';
 import { useState } from 'react';
 import ToggleButton from '../buttons/ToggleButton';
+import ShoppingCart from '../icons/ShoppingCart';
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState<boolean>(false);
@@ -11,8 +12,7 @@ const Navbar = () => {
   const containerClasses = clsx(
     'mt-8 flex-1 justify-self-center pb-3 md:mt-0 md:block md:pb-0 transform duration-500 transition-all md:-translate-x-[0%] -translate-x-[150%] absolute',
     {
-      'block transition-all duration-500 z-10  transform translate-x-[250%] ':
-        mobileMenu,
+      'block transition-all duration-500 z-10  transform translate-x-[250%] ': mobileMenu,
       'md:relative ': !mobileMenu,
     }
   );
@@ -26,10 +26,7 @@ const Navbar = () => {
               <h2 className="text-2xl font-bold">Epic Samples</h2>
             </a>
             <div className="md:hidden">
-              <ToggleButton
-                mobileMenu={mobileMenu}
-                setMobileMenu={setMobileMenu}
-              />
+              <ToggleButton mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
             </div>
           </div>
         </div>
@@ -41,6 +38,7 @@ const Navbar = () => {
                   {link.label}
                 </NavLink>
               ))}
+              <ShoppingCart />
             </ul>
           </div>
         </div>
