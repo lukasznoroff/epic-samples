@@ -10,10 +10,10 @@ function Home() {
       <section className='h-[100vh]'>
         <Container
           variant="image"
-          style={{ backgroundImage: `url(${HeroImage})` }}
+          style={{ backgroundImage: `url(${HeroImage})`}}
         >
           <Container variant="hero">
-            <Heading variant="h1" >
+            <Heading variant="h1">
               Your destination for unique music samples
             </Heading>
             <Paragraph variant='main'>

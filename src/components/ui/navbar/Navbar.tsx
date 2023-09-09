@@ -1,13 +1,16 @@
 import { clsx } from 'clsx';
-
+import { Link } from 'react-router-dom';
 import NavLink from './NavLink';
 import { navLinks } from './navLinks';
 import { useState } from 'react';
 import ToggleButton from '../buttons/ToggleButton';
 import ShoppingCart from '../icons/ShoppingCart';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState<boolean>(false);
+  const cartProducts = useSelector((state: RootState) => state.cart);
 
   const containerClasses = clsx(
     'mt-8 flex-1 justify-self-center pb-3 md:mt-0 md:block md:pb-0 transform duration-500 transition-all md:-translate-x-[0%] -translate-x-[150%] absolute',
@@ -38,7 +41,12 @@ const Navbar = () => {
                   {link.label}
                 </NavLink>
               ))}
-              <ShoppingCart />
+              <li className="hover:text-gray-500 flex">
+                <Link to="/cart" className="hover:text-gray-500">
+                  <ShoppingCart />
+                </Link>
+                <p className="ml-1">{cartProducts.cart.length}</p>
+              </li>
             </ul>
           </div>
         </div>
