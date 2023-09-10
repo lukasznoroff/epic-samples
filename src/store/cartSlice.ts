@@ -10,10 +10,14 @@ interface CartItem {
 
 interface CartState {
   cart: CartItem[];
+  isItemExistsModal: boolean;
+  isItemAddedModal: boolean;
 }
 
 const initialState: CartState = {
   cart: [],
+  isItemExistsModal: false,
+  isItemAddedModal: false,
 };
 
 const cartSlice = createSlice({
@@ -25,14 +29,19 @@ const cartSlice = createSlice({
 
       if (!existingItem) {
         state.cart.push(action.payload);
+        state.isItemAddedModal = true; 
       } else {
-        console.log('This samplepack already exists in your cart');
+        state.isItemExistsModal = true;
       }
       localStorage.setItem('cart', JSON.stringify(state.cart));
     },
     removeFromCart: (state, action: PayloadAction<string>) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload);
       localStorage.setItem('cart', JSON.stringify(state.cart));
+    },
+    closeModal: (state) => {
+      state.isItemExistsModal = false;
+      state.isItemAddedModal = false;
     },
     initializeCart: (state) => {
       const savedCart = localStorage.getItem('cart');
@@ -43,5 +52,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, initializeCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, initializeCart, closeModal } = cartSlice.actions;
 export default cartSlice.reducer;

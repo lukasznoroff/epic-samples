@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { RootState } from '../store/store';
 import { useFetch } from '../hooks/useFetch';
 import AudioPlayer from './AudioPlayer';
 import GridItems from './GridItems';
@@ -6,8 +9,9 @@ import SelectComponent from '../components/select-inputs/SelectComponent';
 import { genreOptions, priceOptions } from '../components/select-inputs/optionsData';
 import Heading from '../components/ui/typography/Heading';
 import Container from './ui/container/Container';
-import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
+import CartItemExistsModal from './ui/modals/CartItemExistsModal';
+import CartItemAddedModal from './ui/modals/CartItemAddedModal';
 
 interface DataItem {
   id: string;
@@ -31,21 +35,19 @@ function ProductOptions() {
   const [selectedGenres, setSelectedGenres] = useState<string>('All');
   const [selectedPriceOption, setSelectedPriceOption] = useState<string>('All');
   const [filteredData, setFilteredData] = useState<DataItem[]>([]);
-  const [resetPrice, setResetPrice] = useState(false);
   const [selectedImageName, setSelectedImageName] = useState('');
   const [isStop, setIsStop] = useState<boolean>(false);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+
+  const isItemExistsModal = useSelector((state: RootState) => state.cart.isItemExistsModal);
+  const isItemAddedModalOpen = useSelector((state: RootState) => state.cart.isItemAddedModal);
+
   const handleCategoryChange = (selectedOption: any) => {
     setSelectedGenres(selectedOption.value);
   };
 
   const handlePriceChange = (selectedOption: any) => {
     setSelectedPriceOption(selectedOption.value);
-  };
-
-  const handleResetPrice = () => {
-    setSelectedPriceOption('Price');
-    setResetPrice(true);
   };
 
   const playAudio = (audioUrl: string) => {
@@ -89,8 +91,7 @@ function ProductOptions() {
     }
 
     setFilteredData(filtered);
-    setResetPrice(false);
-  }, [selectedGenres, selectedPriceOption, resetPrice, data]);
+  }, [selectedGenres, selectedPriceOption, data]);
 
   useEffect(() => {
     if (selectedGenres === 'All') {
@@ -103,8 +104,8 @@ function ProductOptions() {
   }, [selectedGenres, data]);
 
   const dispatch = useDispatch();
-  const addItemToCart = (item:any) => {
-    dispatch(addToCart(item))
+  const addItemToCart = (item: DataItem) => {
+    dispatch(addToCart(item));
   };
 
   return (
@@ -112,6 +113,8 @@ function ProductOptions() {
       <div className="flex md:flex-row flex-col p-32 mb-1 bg-[#a3a3a3]">
         <div>
           <div className="flex-1">
+            {isItemExistsModal && <CartItemExistsModal />}
+            {isItemAddedModalOpen && <CartItemAddedModal />}
             <Heading variant="h2">BROWSE ALL SOUNDS</Heading>
             <div className="flex">
               <SelectComponent
@@ -125,12 +128,8 @@ function ProductOptions() {
               <SelectComponent
                 options={priceOptions}
                 value={priceOptions.find((option) => option.value === selectedPriceOption) || null}
-                onChange={(selectedOption: any) => {
-                  if (selectedOption.value === 'reset') {
-                    handleResetPrice();
-                  } else {
-                    handlePriceChange(selectedOption);
-                  }
+                onChange={(selectedOption) => {
+                  handlePriceChange(selectedOption);
                 }}
               />
             </div>
@@ -184,7 +183,7 @@ function ProductOptions() {
                 </div>
                 <div className="w-full inline-flex justify-between items-center px-3 py-3 mt-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 cursor-pointer">
                   <p>{item.fields.price} Euro</p>
-                  <p onClick={() => addItemToCart(item)}>ADD</p>
+                  <p className='p-2' onClick={() => addItemToCart(item)}>ADD</p>
                 </div>
               </div>
             </div>

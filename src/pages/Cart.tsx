@@ -1,7 +1,7 @@
 import { RootState } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart } from '../store/cartSlice';
-
+import { removeFromCart,  } from '../store/cartSlice';
+import { styled } from 'styled-components';
 
 function Cart() {
   const cartProducts = useSelector((state: RootState) => state.cart);
@@ -9,74 +9,129 @@ function Cart() {
   const removeItemFromCart = (id: string) => {
     dispatch(removeFromCart(id));
   };
-  console.log(removeItemFromCart)
-  
+  console.log(removeItemFromCart);
+
   const total = cartProducts.cart.reduce((acc, item) => acc + parseFloat(item.fields.price), 0);
 
   return (
-    <div>
+    <Cartshop>
       <div>
-       Total: {total}
-      </div>
-      {cartProducts.cart.map((item: any) => (
-        <div
-          className=" max-w-sm  bg-white  rounded-lg group "
-          key={item.id}
-          // onClick={() => {
-          //   setSelectedImageName(item.fields.name);
-          //   playAudio(item.fields.audio[0].url);
-          // }}
-        >
-          <div className="w-[50%]    ease-in-out duration-500 cursor-pointer hover:drop-shadow-2xl  hover:saturate-200 hover:translate-y-0.5">
-            <img
-              className="rounded-t-lg "
-              src={item.fields.image[0].url}
-              width="100%"
-              height="100%"
-              alt={item.fields.name}
-            />
-            <div className="  grid justify-items-end	h-5	mr-[10px]   mt-[-30px]  opacity-0 transform group-hover:-translate-y-2  transition duration-700  opacity-100 ">
-              <div className="bg-black rounded-full p-3 p-4   opacity-0   ease-in-out duration-500 group-hover:opacity-100  ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 "
-                  fill="white"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 0 1 0 1.971l-11.54 6.347a1.125 1.125 0 0 1-1.667-.985V5.653z"
-                  />
-                </svg>
-              </div>
+        {cartProducts.cart.map((item: any) => (
+          <div
+            className="container"
+            key={item.id}
+            // onClick={() => {
+            //   setSelectedImageName(item.fields.name);
+            //   playAudio(item.fields.audio[0].url);
+            // }}
+          >
+            <div className="image-wrapper">
+              <img
+                className="rounded-t-lg "
+                src={item.fields.image[0].url}
+                width="100%"
+                height="100%"
+                alt={item.fields.name}
+              />
             </div>
-            <div className="p-4 w-full bg-gray-800 border-4 border-r-white rounded-b-lg">
-              <p className="font-normal text-gray-700 dark:text-gray-400">{item.fields.name}</p>
-              <div className="flex justify-between text-gray-700 dark:text-gray-400 text-sm">
-                <p>Genres</p>
-                <p>{item.fields.genres}</p>
-              </div>
-              <div className="w-full inline-flex justify-between items-center px-3 py-3 mt-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 cursor-pointer">
+
+            {/* <div className="flex justify-between w-[90vw]"> */}
+            <div className="content">
+              <p>{item.fields.name}</p>
+              <p>{item.fields.genres}</p>
+              <div className="btn-wrapper">
                 <p>{item.fields.price} Euro</p>
-                <p onClick={() => removeItemFromCart(item.id)}>REMOVE</p>
+                <button className="btn-remove" onClick={() => removeItemFromCart(item.id)}>
+                  REMOVE
+                </button>
               </div>
             </div>
           </div>
+        ))}
+        <div className="total-price-wrapper">
+          <h3 className="total-price">
+            {' '}
+            {!total ? <EmptyCart>Your cart is empty.</EmptyCart> : <>Total: {total} Euro</>}
+          </h3>
         </div>
-      ))}
-      {/* <GridItems
-      setSelectedImageName={setSelectedImageName}
-      setIsStop={setIsStop}
-      isStop={isStop}
-    /> */}
-    
-    </div>
+      </div>
+      {/* <div className="right-col">Total: {total}</div> */}
+    </Cartshop>
   );
 }
 
+const Cartshop = styled.div`
+  display: flex;
+  background-color: #fff;
+  height: 50vh;
+  .container {
+    display: flex;
+  }
+  .image-wrapper {
+    width: 15%;
+    padding: 20px;
+    /* height: 25%;  */
+  }
+  .content {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+    .btn-remove {
+      border: 1px solid #000;
+      padding: 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #d22e2e;
+        border-color: #d22e2e;
+      }
+    }
+    .btn-wrapper {
+      display: flex;
+      margin-left: auto;
+      align-items: center;
+      justify-content: space-between;
+      width: 10vw;
+    }
+  }
+  .total-price {
+    display: flex;
+    font-size: 18px;
+    font-weight: bold;
+    border-top: 1px solid #000;
+    margin-top: 20px;
+    padding: 10px;
+  }
+  .total-price-wrapper {
+    /* display: flex;
+    margin-right: auto;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 65%; */
+
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .right-col {
+    position: absolute;
+    text-align: center;
+    width: 40%;
+    height: 50%;
+    right: 0;
+    padding: 30px;
+    background-color: #afafaf;
+  }
+`;
+
+const EmptyCart = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 export default Cart;
-
-
