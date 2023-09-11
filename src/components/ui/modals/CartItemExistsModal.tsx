@@ -20,7 +20,7 @@ const CartItemExistsModal: React.FC = () => {
     <Modal>
       <div className="modal">
         <div className="modal-content">
-          <p>This sampels pack already exists in your cart.</p>
+          <p>This sounds pack already exists in your cart.</p>
         </div>
       </div>
     </Modal>

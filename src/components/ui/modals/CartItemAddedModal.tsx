@@ -20,7 +20,7 @@ const CartItemAddedModal: React.FC = () => {
     <Modal>
       <div className="modal">
         <div className="modal-content">
-          <p>Sampels pack added to the cart.</p>
+          <p>Sounds pack added to the cart.</p>
         </div>
       </div>
     </Modal>
